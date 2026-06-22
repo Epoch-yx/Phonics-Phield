@@ -22,11 +22,6 @@ export default function PhonemeGame({ onBack }) {
   }, [])
 
   function loadNewRound() {
-    if (round > TOTAL_ROUNDS) {
-      setGameOver(true)
-      return
-    }
-
     // 随机选择一个字母
     const randomLetter = letters[Math.floor(Math.random() * letters.length)]
     setCurrentLetter(randomLetter)
@@ -35,19 +30,13 @@ export default function PhonemeGame({ onBack }) {
     setIsCorrect(null)
     setCanPlay(true)
     setPlayCount(0)
-
-    // 自动播放一次发音
-    setTimeout(() => {
-      playLetterSound(randomLetter.letter)
-      setPlayCount(1)
-    }, 300)
   }
 
   function handlePlaySound() {
     if (!canPlay || !currentLetter) return
 
     if (playCount < MAX_PLAY_COUNT) {
-      playLetterSound(currentLetter.letter)
+      playLetterSound(currentLetter.letter).catch(() => {})
       setPlayCount(prev => prev + 1)
     }
   }
@@ -69,8 +58,12 @@ export default function PhonemeGame({ onBack }) {
 
     // 2秒后进入下一轮
     setTimeout(() => {
-      setRound(prev => prev + 1)
-      loadNewRound()
+      if (round >= TOTAL_ROUNDS) {
+        setGameOver(true)
+      } else {
+        setRound(prev => prev + 1)
+        loadNewRound()
+      }
     }, 1500)
   }
 

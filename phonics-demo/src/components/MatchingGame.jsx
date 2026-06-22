@@ -143,7 +143,7 @@ export default function MatchingGame({ onBack }) {
   }
 
   function playWord(word) {
-    playWordSound(word)
+    playWordSound(word).catch(() => {})
   }
 
   // 关卡选择画面
@@ -368,7 +368,7 @@ function Card({ card, isFlipped, isMatched, onClick, type, onPlayWord, cardSize 
   const sizeConfig = {
     large: { width: 'w-36 h-44', text: 'text-2xl', image: 120, iconSize: 'text-4xl' },
     medium: { width: 'w-28 h-36', text: 'text-xl', image: 96, iconSize: 'text-3xl' },
-    small: { width: 'w-24 h-30', text: 'text-lg', image: 80, iconSize: 'text-2xl' },
+    small: { width: 'w-24 h-32', text: 'text-lg', image: 80, iconSize: 'text-2xl' },
     tiny: { width: 'w-20 h-24', text: 'text-base', image: 64, iconSize: 'text-xl' },
   }
 
@@ -400,18 +400,27 @@ function Card({ card, isFlipped, isMatched, onClick, type, onPlayWord, cardSize 
               <span className={`font-bold ${THEME.text} ${text}`}>
                 {card.word}
               </span>
-              <button
+              <span
+                role="button"
+                tabIndex={0}
                 onClick={(e) => {
                   e.stopPropagation()
                   onPlayWord(card.word)
                 }}
-                className="mt-2 bg-emerald-100 px-3 py-1 rounded-full hover:bg-emerald-200 flex items-center gap-1"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    onPlayWord(card.word)
+                  }
+                }}
+                className="mt-2 bg-emerald-100 px-3 py-1 rounded-full hover:bg-emerald-200 flex items-center gap-1 cursor-pointer"
               >
                 <svg className="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
                   <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
                 </svg>
-              </button>
+              </span>
             </>
           ) : (
             <div className="flex items-center justify-center">

@@ -8,8 +8,8 @@ export const letters = [
   { letter: 'F', sound: 'f', emoji: '🐟' },
   { letter: 'G', sound: 'g', emoji: '🍇' },
   { letter: 'H', sound: 'h', emoji: '🏠' },
-  { letter: 'I', sound: 'i', emoji: '冰淇淋' },
-  { letter: 'J', sound: 'j', emoji: '果酱' },
+  { letter: 'I', sound: 'i', emoji: '🍦' },
+  { letter: 'J', sound: 'j', emoji: '🍯' },
   { letter: 'K', sound: 'k', emoji: '🪁' },
   { letter: 'L', sound: 'l', emoji: '🦁' },
   { letter: 'M', sound: 'm', emoji: '🍈' },
@@ -54,7 +54,7 @@ export const words = [
   { word: 'Van', firstLetter: 'V', emoji: '🚐' },
   { word: 'Water', firstLetter: 'W', emoji: '💧' },
   { word: 'Fox', firstLetter: 'F', emoji: '🦊' },
-  { word: 'Yak', firstLetter: 'Y', emoji: '�牦牛' },
+  { word: 'Yak', firstLetter: 'Y', emoji: '🐂' },
   { word: 'Zebra', firstLetter: 'Z', emoji: '🦓' },
 ]
 
@@ -93,14 +93,12 @@ export const matchingWords = [
   { word: 'rat', emoji: '🐀' },
   { word: 'hat', emoji: '🎩' },
   { word: 'mat', emoji: '🧹' },
-  { word: 'vat', emoji: '🫗' },
 
   // -an family
   { word: 'can', emoji: '🥫' },
   { word: 'fan', emoji: '🌀' },
   { word: 'man', emoji: '👨' },
   { word: 'pan', emoji: '🍳' },
-  { word: 'ran', emoji: '🏃' },
 
   // -ap family
   { word: 'cap', emoji: '🧢' },
@@ -117,7 +115,6 @@ export const matchingWords = [
   { word: 'rag', emoji: '🧣' },
 
   // -am family
-  { word: 'ham', emoji: '🍖' },
   { word: 'jam', emoji: '🫐' },
   { word: 'ram', emoji: '🐏' },
   { word: 'yam', emoji: '🍠' },
@@ -131,7 +128,6 @@ export const matchingWords = [
   { word: 'rod', emoji: '🎣' },
 
   // -op family
-  { word: 'top', emoji: '🔝' },
   { word: 'hop', emoji: '🐰' },
   { word: 'mop', emoji: '🧹' },
   { word: 'pop', emoji: '🎈' },
@@ -142,8 +138,6 @@ export const matchingWords = [
 
   // -og family
   { word: 'log', emoji: '🪵' },
-  { word: 'dog', emoji: '🐕' },
-  { word: 'fog', emoji: '🌫️' },
 
   // -ed family
   { word: 'bed', emoji: '🛏️' },
@@ -205,32 +199,26 @@ export const matchingWords = [
   { word: 'fin', emoji: '🐟' },
   { word: 'bin', emoji: '🗑️' },
   { word: 'win', emoji: '🏆' },
-  { word: 'tin', emoji: '🥫' },
 
   // -id family
   { word: 'kid', emoji: '👦' },
   { word: 'lid', emoji: '🍯' },
-  { word: 'did', emoji: '✅' },
 
   // -ig family
   { word: 'big', emoji: '🐻' },
-  { word: 'pig', emoji: '🐷' },
   { word: 'dig', emoji: '⛏️' },
   { word: 'fig', emoji: '🌿' },
   { word: 'wig', emoji: '👱' },
 
   // -it family
-  { word: 'it', emoji: '❓' },
   { word: 'hit', emoji: '👊' },
   { word: 'pit', emoji: '🕳️' },
-  { word: 'bit', emoji: '🦷' },
 
   // -ix family
   { word: 'six', emoji: '6️⃣' },
   { word: 'mix', emoji: '🥣' },
 
   // -id continued
-  { word: 'bid', emoji: '🏷️' },
   { word: 'rib', emoji: '🍖' },
   { word: 'rip', emoji: '👖' },
 
@@ -239,10 +227,8 @@ export const matchingWords = [
   { word: 'ax', emoji: '🪓' },
   { word: 'bib', emoji: '👶' },
   { word: 'egg', emoji: '🥚' },
-  { word: 'gum', emoji: '口香糖' },
+  { word: 'gum', emoji: '🍬' },
   { word: 'ink', emoji: '🖊️' },
-  { word: 'log', emoji: '🪵' },
-  { word: 'toip', emoji: '📬' },
   { word: 'yak', emoji: '🦬' },
 ]
 

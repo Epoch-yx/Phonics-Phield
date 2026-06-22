@@ -10,9 +10,9 @@ const availableImages = [
   'dig', 'dot', 'egg', 'fan', 'fig', 'fin', 'fox', 'fun', 'gum', 'hat',
   'hen', 'hip', 'hit', 'hop', 'hot', 'hug', 'hum', 'hut', 'in', 'ink',
   'jam', 'jet', 'jug', 'kid', 'lid', 'lip', 'log', 'man', 'map', 'mat',
-  'mix', 'mop', 'mud', 'mug', 'nap', 'net', 'nut', 'ox', 'pad', 'pen',
-  'pet', 'pin', 'pit', 'pop', 'pot', 'pup', 'rag', 'ram', 'rat', 'red',
-  'rib', 'rip', 'rod', 'rug', 'run', 'sip', 'six', 'sun', 'tap', 'ten',
+  'mix', 'mop', 'mud', 'mug', 'nap', 'net', 'nut', 'ox', 'pad', 'pan',
+  'pen', 'pet', 'pin', 'pit', 'pop', 'pot', 'pup', 'rag', 'ram', 'rat',
+  'red', 'rib', 'rip', 'rod', 'rub', 'rug', 'run', 'sip', 'six', 'sun', 'tap', 'ten',
   'tip', 'toip', 'tub', 'up', 'vet', 'web', 'wet', 'wig', 'win', 'yak',
   'yam', 'zip'
 ]

@@ -20,24 +20,13 @@ export default function LetterMatchGame({ onBack }) {
   }, [])
 
   function loadNewRound() {
-    if (round > TOTAL_ROUNDS) {
-      setGameOver(true)
-      return
-    }
-
     // 随机选择一个单词
     const randomWord = words[Math.floor(Math.random() * words.length)]
     setCurrentWord(randomWord)
     setOptions(getRandomOptions(randomWord.firstLetter, letters.map(l => l.letter)))
     setSelectedOption(null)
     setIsCorrect(null)
-    setShowWord(false)
-
-    // 延迟显示单词，先播放发音
-    setTimeout(() => {
-      playWordSound(randomWord.word)
-      setShowWord(true)
-    }, 500)
+    setShowWord(true)
   }
 
   function handleOptionClick(letter) {
@@ -56,14 +45,18 @@ export default function LetterMatchGame({ onBack }) {
 
     // 2秒后进入下一轮
     setTimeout(() => {
-      setRound(prev => prev + 1)
-      loadNewRound()
+      if (round >= TOTAL_ROUNDS) {
+        setGameOver(true)
+      } else {
+        setRound(prev => prev + 1)
+        loadNewRound()
+      }
     }, 1500)
   }
 
   function handleReplay() {
     if (currentWord) {
-      playWordSound(currentWord.word)
+      playWordSound(currentWord.word).catch(() => {})
     }
   }
 
