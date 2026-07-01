@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/jasminezhuang/Desktop/Claude/Code/Test/**)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "WebSearch",
+      "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)"
+    ]
+  }
+}
