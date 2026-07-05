@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0",
+  "description": "字母匹配游戏用单词词库",
+  "words": [
+    { "word": "Apple", "firstLetter": "A", "emoji": "🍎" },
+    { "word": "Ball", "firstLetter": "B", "emoji": "🏀" },
+    { "word": "Cat", "firstLetter": "C", "emoji": "🐱" },
+    { "word": "Dog", "firstLetter": "D", "emoji": "🐕" },
+    { "word": "Egg", "firstLetter": "E", "emoji": "🥚" },
+    { "word": "Fish", "firstLetter": "F", "emoji": "🐟" },
+    { "word": "Grape", "firstLetter": "G", "emoji": "🍇" },
+    { "word": "House", "firstLetter": "H", "emoji": "🏠" },
+    { "word": "Ice cream", "firstLetter": "I", "emoji": "🍦" },
+    { "word": "Jelly", "firstLetter": "J", "emoji": "🫐" },
+    { "word": "Kite", "firstLetter": "K", "emoji": "🪁" },
+    { "word": "Lion", "firstLetter": "L", "emoji": "🦁" },
+    { "word": "Melon", "firstLetter": "M", "emoji": "🍈" },
+    { "word": "Nut", "firstLetter": "N", "emoji": "🌰" },
+    { "word": "Octopus", "firstLetter": "O", "emoji": "🐙" },
+    { "word": "Butterfly", "firstLetter": "B", "emoji": "🦋" },
+    { "word": "Queen", "firstLetter": "Q", "emoji": "👸" },
+    { "word": "Rainbow", "firstLetter": "R", "emoji": "🌈" },
+    { "word": "Sun", "firstLetter": "S", "emoji": "☀️" },
+    { "word": "Tree", "firstLetter": "T", "emoji": "🌲" },
+    { "word": "Umbrella", "firstLetter": "U", "emoji": "☂️" },
+    { "word": "Van", "firstLetter": "V", "emoji": "🚐" },
+    { "word": "Water", "firstLetter": "W", "emoji": "💧" },
+    { "word": "Fox", "firstLetter": "F", "emoji": "🦊" },
+    { "word": "Yak", "firstLetter": "Y", "emoji": "🐂" },
+    { "word": "Zebra", "firstLetter": "Z", "emoji": "🦓" }
+  ]
+}

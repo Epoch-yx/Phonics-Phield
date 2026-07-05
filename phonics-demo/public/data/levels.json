@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "description": "翻牌连连看关卡配置",
+  "levels": [
+    { "level": 1, "pairs": 4, "name": "入门" },
+    { "level": 2, "pairs": 6, "name": "初级" },
+    { "level": 3, "pairs": 8, "name": "中级" },
+    { "level": 4, "pairs": 10, "name": "高级" },
+    { "level": 5, "pairs": 12, "name": "专家" },
+    { "level": 6, "pairs": 14, "name": "大师" }
+  ]
+}

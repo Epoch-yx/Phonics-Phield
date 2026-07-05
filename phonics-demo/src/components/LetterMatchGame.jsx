@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { words, letters, getRandomOptions, shuffleArray } from '../data/gameData'
+import { getRandomOptions, shuffleArray } from '../data/gameData'
+import { getWords, getLetters } from '../services/dataService'
+import { useGameData } from '../hooks/useGameData'
 import { playWordSound, playSound } from '../utils/audio'
+import { recordResult, recordGameEnd } from '../services/progress/progressService'
 import LetterCard from './LetterCard'
 
 export default function LetterMatchGame({ onBack }) {
@@ -15,11 +18,20 @@ export default function LetterMatchGame({ onBack }) {
 
   const TOTAL_ROUNDS = 10
 
+  const { data: letters, loading: lettersLoading } = useGameData(getLetters)
+  const { data: words, loading: wordsLoading } = useGameData(getWords)
+  const isLoading = lettersLoading || wordsLoading
+
   useEffect(() => {
-    loadNewRound()
-  }, [])
+    if (words && letters) {
+      loadNewRound()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [words, letters])
 
   function loadNewRound() {
+    if (!words?.length || !letters?.length) return
+
     // 随机选择一个单词
     const randomWord = words[Math.floor(Math.random() * words.length)]
     setCurrentWord(randomWord)
@@ -30,11 +42,19 @@ export default function LetterMatchGame({ onBack }) {
   }
 
   function handleOptionClick(letter) {
-    if (selectedOption || !showWord) return
+    if (selectedOption || !showWord || !currentWord) return
 
     setSelectedOption(letter)
     const correct = letter === currentWord.firstLetter
     setIsCorrect(correct)
+
+    // 记录学习结果：单词 + 首字母
+    recordResult({
+      word: currentWord.word,
+      letter: currentWord.firstLetter,
+      isCorrect: correct,
+      game: 'letterMatch',
+    })
 
     if (correct) {
       setScore(prev => prev + 10)
@@ -47,6 +67,7 @@ export default function LetterMatchGame({ onBack }) {
     setTimeout(() => {
       if (round >= TOTAL_ROUNDS) {
         setGameOver(true)
+        recordGameEnd('letterMatch', score + (correct ? 10 : 0))
       } else {
         setRound(prev => prev + 1)
         loadNewRound()
@@ -93,6 +114,15 @@ export default function LetterMatchGame({ onBack }) {
             </button>
           </div>
         </div>
+      </div>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-600 to-blue-600 flex flex-col items-center justify-center p-4">
+        <div className="text-6xl mb-4 animate-bounce">📚</div>
+        <h2 className="text-2xl font-bold text-white">正在加载词库...</h2>
       </div>
     )
   }

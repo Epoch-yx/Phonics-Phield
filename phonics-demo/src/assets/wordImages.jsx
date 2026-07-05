@@ -1,33 +1,16 @@
-// 儿童风格图片组件
-// 使用本地真实图片资源
-
 import React, { useState } from 'react'
 
-// 可用的图片单词列表
-const availableImages = [
-  'ant', 'ax', 'bag', 'bat', 'bed', 'bib', 'big', 'bin', 'bud', 'bug',
-  'bun', 'can', 'cap', 'cat', 'cot', 'cub', 'cup', 'cut', 'dad', 'dam',
-  'dig', 'dot', 'egg', 'fan', 'fig', 'fin', 'fox', 'fun', 'gum', 'hat',
-  'hen', 'hip', 'hit', 'hop', 'hot', 'hug', 'hum', 'hut', 'in', 'ink',
-  'jam', 'jet', 'jug', 'kid', 'lid', 'lip', 'log', 'man', 'map', 'mat',
-  'mix', 'mop', 'mud', 'mug', 'nap', 'net', 'nut', 'ox', 'pad', 'pan',
-  'pen', 'pet', 'pin', 'pit', 'pop', 'pot', 'pup', 'rag', 'ram', 'rat',
-  'red', 'rib', 'rip', 'rod', 'rub', 'rug', 'run', 'sip', 'six', 'sun', 'tap', 'ten',
-  'tip', 'toip', 'tub', 'up', 'vet', 'web', 'wet', 'wig', 'win', 'yak',
-  'yam', 'zip'
-]
-
-// 主组件 - 根据单词显示对应图片
-export const WordImage = ({ word, size = 64 }) => {
+/**
+ * 单词图片组件
+ * 根据单词自动匹配 /images/{word}.jpg，加载失败则显示占位符
+ */
+export const WordImage = ({ word, imageUrl, size = 64 }) => {
   const lowerWord = word.toLowerCase()
   const [error, setError] = useState(false)
 
-  // 检查图片是否存在
-  const imagePath = `/images/${lowerWord}.jpg`
-  const isAvailable = availableImages.includes(lowerWord)
+  const imagePath = imageUrl || `/images/${lowerWord}.jpg`
 
-  if (!isAvailable || error) {
-    // 如果图片不存在，显示占位符
+  if (error) {
     return (
       <div
         style={{

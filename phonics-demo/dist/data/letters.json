@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "letters": [
+    { "id": "a", "letter": "A", "sound": "a", "emoji": "🍎" },
+    { "id": "b", "letter": "B", "sound": "b", "emoji": "🏀" },
+    { "id": "c", "letter": "C", "sound": "c", "emoji": "🐱" },
+    { "id": "d", "letter": "D", "sound": "d", "emoji": "🐕" },
+    { "id": "e", "letter": "E", "sound": "e", "emoji": "🥚" },
+    { "id": "f", "letter": "F", "sound": "f", "emoji": "🐟" },
+    { "id": "g", "letter": "G", "sound": "g", "emoji": "🍇" },
+    { "id": "h", "letter": "H", "sound": "h", "emoji": "🏠" },
+    { "id": "i", "letter": "I", "sound": "i", "emoji": "🍦" },
+    { "id": "j", "letter": "J", "sound": "j", "emoji": "🍯" },
+    { "id": "k", "letter": "K", "sound": "k", "emoji": "🪁" },
+    { "id": "l", "letter": "L", "sound": "l", "emoji": "🦁" },
+    { "id": "m", "letter": "M", "sound": "m", "emoji": "🍈" },
+    { "id": "n", "letter": "N", "sound": "n", "emoji": "🌰" },
+    { "id": "o", "letter": "O", "sound": "o", "emoji": "🐙" },
+    { "id": "p", "letter": "P", "sound": "p", "emoji": "🦋" },
+    { "id": "q", "letter": "Q", "sound": "q", "emoji": "👸" },
+    { "id": "r", "letter": "R", "sound": "r", "emoji": "🌈" },
+    { "id": "s", "letter": "S", "sound": "s", "emoji": "☀️" },
+    { "id": "t", "letter": "T", "sound": "t", "emoji": "🌲" },
+    { "id": "u", "letter": "U", "sound": "u", "emoji": "☂️" },
+    { "id": "v", "letter": "V", "sound": "v", "emoji": "🦅" },
+    { "id": "w", "letter": "W", "sound": "w", "emoji": "🌊" },
+    { "id": "x", "letter": "X", "sound": "x", "emoji": "🦴" },
+    { "id": "y", "letter": "Y", "sound": "y", "emoji": "🪀" },
+    { "id": "z", "letter": "Z", "sound": "z", "emoji": "⚡" }
+  ]
+}

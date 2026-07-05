@@ -1,11 +1,15 @@
-// Web Speech API + Web Audio 播放工具
+// 音频工具：云 TTS + 本地音效
+// 单词/字母发音由 src/services/tts 提供，支持本地 Web Speech 和 Azure 云 TTS 切换
+
+export {
+  prepareTTS,
+  speak,
+  playLetterSound,
+  playWordSound,
+  getTTSInfo,
+} from '../services/tts'
 
 let audioContext = null
-let voicesPromise = null
-
-function getSynth() {
-  return typeof window !== 'undefined' ? window.speechSynthesis : null
-}
 
 function getAudioContext() {
   if (!audioContext) {
@@ -14,113 +18,15 @@ function getAudioContext() {
   return audioContext
 }
 
-function waitForVoices() {
-  if (voicesPromise) return voicesPromise
-
-  voicesPromise = new Promise((resolve) => {
-    const synth = getSynth()
-    if (!synth) {
-      resolve([])
-      return
-    }
-
-    const finish = () => {
-      clearInterval(pollId)
-      clearTimeout(timeoutId)
-      resolve(synth.getVoices())
-    }
-
-    if (synth.getVoices().length > 0) {
-      resolve(synth.getVoices())
-      return
-    }
-
-    synth.addEventListener('voiceschanged', finish, { once: true })
-
-    const pollId = setInterval(() => {
-      if (synth.getVoices().length > 0) finish()
-    }, 100)
-
-    const timeoutId = setTimeout(finish, 3000)
-  })
-
-  return voicesPromise
-}
-
-function pickEnglishVoice(voices) {
-  return (
-    voices.find((v) => v.lang.startsWith('en') && v.localService) ||
-    voices.find((v) => v.lang.startsWith('en')) ||
-    voices[0] ||
-    null
-  )
-}
-
-// 在用户点击时解锁语音（Safari / Chrome 必需）
+// 在用户点击时解锁音频上下文（Safari / Chrome 必需）
 export async function ensureAudioReady() {
   const ctx = getAudioContext()
   if (ctx.state === 'suspended') {
     await ctx.resume()
   }
-
-  const synth = getSynth()
-  if (!synth) return
-
-  synth.getVoices()
-  await waitForVoices()
 }
 
-function speakText(text, { rate = 0.8, pitch = 1.1 } = {}) {
-  return new Promise(async (resolve, reject) => {
-    const synth = getSynth()
-    if (!synth) {
-      reject(new Error('Speech synthesis not supported'))
-      return
-    }
-
-    try {
-      await ensureAudioReady()
-    } catch (err) {
-      reject(err)
-      return
-    }
-
-    const voices = await waitForVoices()
-    const voice = pickEnglishVoice(voices)
-    const wasSpeaking = synth.speaking || synth.pending
-
-    const doSpeak = () => {
-      const utterance = new SpeechSynthesisUtterance(text)
-      utterance.lang = 'en-US'
-      utterance.rate = rate
-      utterance.pitch = pitch
-      utterance.volume = 1
-      if (voice) utterance.voice = voice
-
-      utterance.onend = () => resolve()
-      utterance.onerror = (event) => reject(event.error || event)
-
-      synth.speak(utterance)
-    }
-
-    // cancel 后立即 speak 在 Chrome/Safari 会静默失败，需短暂延迟
-    if (wasSpeaking) {
-      synth.cancel()
-      setTimeout(doSpeak, 150)
-    } else {
-      doSpeak()
-    }
-  })
-}
-
-export function playLetterSound(letter) {
-  return speakText(letter.toLowerCase(), { rate: 0.8, pitch: 1.2 })
-}
-
-export function playWordSound(word) {
-  return speakText(word, { rate: 0.7, pitch: 1.1 })
-}
-
+// 播放游戏音效（成功 / 失败 / 点击）
 export async function playSound(type) {
   try {
     const ctx = getAudioContext()

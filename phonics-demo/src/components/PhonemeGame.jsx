@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { letters, getRandomOptions } from '../data/gameData'
+import { getRandomOptions } from '../data/gameData'
+import { getLetters } from '../services/dataService'
+import { useGameData } from '../hooks/useGameData'
 import { playLetterSound, playSound } from '../utils/audio'
+import { recordResult, recordGameEnd } from '../services/progress/progressService'
 import LetterCard from './LetterCard'
 
 export default function PhonemeGame({ onBack }) {
@@ -17,11 +20,18 @@ export default function PhonemeGame({ onBack }) {
   const TOTAL_ROUNDS = 10
   const MAX_PLAY_COUNT = 3
 
+  const { data: letters, loading: isLoading } = useGameData(getLetters)
+
   useEffect(() => {
-    loadNewRound()
-  }, [])
+    if (letters) {
+      loadNewRound()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [letters])
 
   function loadNewRound() {
+    if (!letters?.length) return
+
     // 随机选择一个字母
     const randomLetter = letters[Math.floor(Math.random() * letters.length)]
     setCurrentLetter(randomLetter)
@@ -42,12 +52,19 @@ export default function PhonemeGame({ onBack }) {
   }
 
   function handleOptionClick(letter) {
-    if (selectedOption || !canPlay) return
+    if (selectedOption || !canPlay || !currentLetter) return
 
     setSelectedOption(letter)
     const correct = letter === currentLetter.letter
     setIsCorrect(correct)
     setCanPlay(false)
+
+    // 记录学习结果：字母
+    recordResult({
+      letter: currentLetter.letter,
+      isCorrect: correct,
+      game: 'phoneme',
+    })
 
     if (correct) {
       setScore(prev => prev + 10)
@@ -60,6 +77,7 @@ export default function PhonemeGame({ onBack }) {
     setTimeout(() => {
       if (round >= TOTAL_ROUNDS) {
         setGameOver(true)
+        recordGameEnd('phoneme', score + (correct ? 10 : 0))
       } else {
         setRound(prev => prev + 1)
         loadNewRound()
@@ -100,6 +118,15 @@ export default function PhonemeGame({ onBack }) {
             </button>
           </div>
         </div>
+      </div>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-600 to-teal-600 flex flex-col items-center justify-center p-4">
+        <div className="text-6xl mb-4 animate-bounce">📚</div>
+        <h2 className="text-2xl font-bold text-white">正在加载词库...</h2>
       </div>
     )
   }

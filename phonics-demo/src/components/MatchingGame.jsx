@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { matchingWords, shuffleArray, levelConfig } from '../data/gameData'
+import { shuffleArray } from '../data/gameData'
+import { getMatchingWords, getLevels } from '../services/dataService'
+import { useGameData } from '../hooks/useGameData'
 import { playWordSound, playSound } from '../utils/audio'
+import { recordResult, recordGameEnd } from '../services/progress/progressService'
 import { WordImage } from '../assets/wordImages'
 
 // 护眼配色主题
@@ -28,8 +31,14 @@ export default function MatchingGame({ onBack }) {
   const [totalPairs, setTotalPairs] = useState(0)
   const [usedWords, setUsedWords] = useState([])
 
+  const { data: matchingWords, loading: wordsLoading } = useGameData(getMatchingWords)
+  const { data: levelConfig, loading: levelsLoading } = useGameData(getLevels)
+  const isLoading = wordsLoading || levelsLoading
+
   // 开始指定关卡
   function startLevel(level) {
+    if (!levelConfig?.length) return
+
     const config = levelConfig[level - 1]
     setCurrentLevel(level)
     setTotalPairs(config.pairs)
@@ -38,6 +47,8 @@ export default function MatchingGame({ onBack }) {
   }
 
   function initGame(pairs) {
+    if (!matchingWords?.length) return
+
     // 随机选择指定数量的单词对（避免重复）
     const availableWords = matchingWords.filter(w => !usedWords.includes(w.word))
     const selectedWords = shuffleArray(availableWords).slice(0, pairs)
@@ -47,6 +58,7 @@ export default function MatchingGame({ onBack }) {
       id: `left-${index}`,
       word: item.word,
       emoji: item.emoji,
+      phonics: item.phonics,
       isFlipped: false,
     }))
 
@@ -55,6 +67,7 @@ export default function MatchingGame({ onBack }) {
       id: `right-${index}`,
       word: item.word,
       emoji: item.emoji,
+      phonics: item.phonics,
       isFlipped: false,
     }))
 
@@ -114,16 +127,33 @@ export default function MatchingGame({ onBack }) {
         setFlippedRight(null)
         setCanFlip(true)
 
+        // 记录学习结果
+        recordResult({
+          word: leftCard.word,
+          phonics: leftCard.phonics,
+          isCorrect: true,
+          game: 'matching',
+        })
+
         // 检查是否全部完成
         if (matchedPairs.length + 1 === totalPairs) {
           setTimeout(() => {
             setUsedWords(prev => [...prev, ...matchedPairs, leftCard.word])
             setGameState('complete')
+            recordGameEnd('matching', score + 20, currentLevel)
           }, 500)
         }
       }, 500)
     } else {
       // 匹配失败
+      // 记录学习结果（取当前尝试的左侧单词）
+      recordResult({
+        word: leftCard.word,
+        phonics: leftCard.phonics,
+        isCorrect: false,
+        game: 'matching',
+      })
+
       setTimeout(() => {
         playSound('error')
 
@@ -148,6 +178,15 @@ export default function MatchingGame({ onBack }) {
 
   // 关卡选择画面
   if (gameState === 'select') {
+    if (isLoading) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900 flex flex-col items-center justify-center p-4">
+          <div className="text-6xl mb-4 animate-bounce">📚</div>
+          <h2 className="text-2xl font-bold text-white">正在加载词库...</h2>
+        </div>
+      )
+    }
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900 flex flex-col p-4">
         <div className="flex justify-between items-center mb-8">
